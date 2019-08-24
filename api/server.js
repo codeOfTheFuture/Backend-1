@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const authRouter = require('../auth/auth-router');
+const problemsRouter = require('../problems/problems-router');
 
 // Initialize express
 const server = express();
@@ -21,5 +22,6 @@ mongoose
 
 // Routes
 server.use('/api/auth', authRouter);
+server.use('/api/problems', problemsRouter);
 
 module.exports = server;
