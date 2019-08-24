@@ -8,4 +8,13 @@ const server = express();
 // Body Parser Middleware
 server.use(bodyParser.json());
 
+// DB Config
+const db = require('../config/keys').mongoURI;
+
+// Connect to Mongo
+mongoose
+  .connect(db)
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.log(err));
+
 module.exports = server;
