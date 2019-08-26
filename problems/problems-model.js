@@ -14,9 +14,40 @@ const ProblemSchema = new Schema({
     },
   },
   field: {
-    type: String,
+    _id: {
+      type: Schema.Types.ObjectId,
+      ref: 'fields',
+    },
+    fieldName: {
+      type: String,
+    },
   },
-  relatedProblems: Array,
+  problemSolutions: [
+    {
+      user: {
+        _id: {
+          type: Schema.Types.ObjectId,
+          ref: 'users',
+        },
+        username: {
+          type: String,
+        },
+      },
+      date: {
+        type: String,
+        default: Date.now,
+      },
+      votes: {
+        type: Number,
+      },
+    },
+  ],
+  relatedProblems: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'problems',
+    },
+  ],
 });
 
-module.exports = Problem = mongoose.model('Problem', ProblemSchema);
+module.exports = Problem = mongoose.model('problems', ProblemSchema);

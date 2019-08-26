@@ -7,7 +7,7 @@ const Users = require('../users/users-model');
 const secrets = require('../config/jwtSecret');
 
 // Load user model
-const User = mongoose.model('User');
+const User = mongoose.model('users');
 
 // Register a new user
 router.post('/register', (req, res) => {
@@ -20,6 +20,7 @@ router.post('/register', (req, res) => {
   const newUser = new Users({
     username: user.username,
     password: user.password,
+    favoriteFields: [...user.favoriteFields],
   });
 
   newUser.save().then(user => {
@@ -27,7 +28,11 @@ router.post('/register', (req, res) => {
       const token = generateToken(user);
       res.status(201).json({
         message: `Welcome ${user.username}`,
-        user: { id: user.id, username: user.username },
+        user: {
+          id: user.id,
+          username: user.username,
+          favoriteFields: user.favoriteFields,
+        },
         token,
       });
     } else {

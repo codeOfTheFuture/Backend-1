@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const authRouter = require('../auth/auth-router');
 const problemsRouter = require('../problems/problems-router');
+const fieldsRouter = require('../fields/fields-router');
 
 // Initialize express
 const server = express();
@@ -23,5 +24,6 @@ mongoose
 // Routes
 server.use('/api/auth', authRouter);
 server.use('/api/problems', problemsRouter);
+server.use('/api/fields', fieldsRouter);
 
 module.exports = server;
