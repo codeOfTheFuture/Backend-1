@@ -3,23 +3,14 @@ const Schema = mongoose.Schema;
 
 // Create Problem Schema
 const ProblemSchema = new Schema({
-  description: {
+  problem: {
     title: {
       type: String,
       required: true,
     },
-    body: {
+    description: {
       type: String,
       required: true,
-    },
-  },
-  field: {
-    _id: {
-      type: Schema.Types.ObjectId,
-      ref: 'fields',
-    },
-    fieldName: {
-      type: String,
     },
   },
   problemSolutions: [
