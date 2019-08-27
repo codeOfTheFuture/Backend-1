@@ -3,16 +3,18 @@ const mongoose = require('mongoose');
 
 // const globalMiddleware = require('../config/global-middleware');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const authRouter = require('../auth/auth-router');
 const problemsRouter = require('../problems/problems-router');
-const fieldsRouter = require('../fields/fields-router');
+const solutionsRouter = require('../solutions/solution-router');
 
 // Initialize express
 const server = express();
 
 // Global Middleware
 // globalMiddleware(server);
+server.use(cors());
 server.use(bodyParser.json());
 
 // DB Config
@@ -27,6 +29,6 @@ mongoose
 // Routes
 server.use('/api/auth', authRouter);
 server.use('/api/problems', problemsRouter);
-server.use('/api/fields', fieldsRouter);
+server.use('/api/problems/solutions', solutionsRouter);
 
 module.exports = server;
