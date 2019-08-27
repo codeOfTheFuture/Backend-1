@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const globalMiddleware = require('../config/global-middleware');
+// const globalMiddleware = require('../config/global-middleware');
+const bodyParser = require('body-parser');
 
 const authRouter = require('../auth/auth-router');
 const problemsRouter = require('../problems/problems-router');
@@ -11,7 +12,8 @@ const fieldsRouter = require('../fields/fields-router');
 const server = express();
 
 // Global Middleware
-globalMiddleware(server);
+// globalMiddleware(server);
+server.use(bodyParser.json());
 
 // DB Config
 const db = require('../config/keys').mongoURI;
