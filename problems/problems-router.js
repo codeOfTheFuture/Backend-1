@@ -67,12 +67,12 @@ router.post('/', async (req, res) => {
     const updateUser = await User.findById(prob.userId);
 
     console.log(updateUser);
-    updateUser.problemsAddedByUser.push(problem._id);
+    updateUser.problemsAddedByUser.push({
+      id: problem._id,
+      title: problem.title,
+    });
 
     updateUser.save();
-
-    // field.problems.push(problem.id);
-    // await field.save();
 
     res.status(201).json(problem);
   } catch (err) {
