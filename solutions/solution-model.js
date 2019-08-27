@@ -35,3 +35,5 @@ const SolutionSchema = new Schema({
     },
   ],
 });
+
+module.exports = Solutions = mongoose.model('solutions', SolutionSchema);

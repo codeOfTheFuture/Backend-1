@@ -20,7 +20,6 @@ router.post('/register', (req, res) => {
   const newUser = new Users({
     username: user.username,
     password: user.password,
-    favoriteFields: [...user.favoriteFields],
   });
 
   newUser.save().then(user => {
@@ -29,9 +28,11 @@ router.post('/register', (req, res) => {
       res.status(201).json({
         message: `Welcome ${user.username}`,
         user: {
-          id: user.id,
+          id: user._id,
           username: user.username,
-          favoriteFields: user.favoriteFields,
+          problemsAddedByUser: user.problemsAddedByUser,
+          solutionsAddedByUser: user.solutionsAddedByUser,
+          problemsOfInterest: user.problemsOfInterest,
         },
         token,
       });

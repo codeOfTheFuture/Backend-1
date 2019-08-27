@@ -3,12 +3,16 @@ const mongoose = require('mongoose');
 
 const Problems = require('./problems-model');
 const Fields = require('../fields/fields-model');
+const Users = require('../users/users-model');
 
 // Load Problems model
 const Problem = mongoose.model('problems');
 
 // Load Fields model
 const Field = mongoose.model('fields');
+
+// Load Users model
+const User = mongoose.model('users');
 
 // Get all problems
 router.get('/', (req, res) => {
@@ -41,22 +45,25 @@ router.post('/', async (req, res) => {
   try {
     const prob = req.body;
 
-    const field = await Field.findOne({ name: prob.field });
+    // const field = await Field.findOne({ name: prob.field });
 
     const newProblem = new Problems({
-      description: {
-        title: prob.description.title,
-        body: prob.description.body,
-      },
-      field: field._id,
-      fieldName: field.name,
-      relatedProblems: prob.relatedProblems,
+      title: prob.title,
+      description: prob.description,
+      user: prob.userId,
     });
 
     const problem = await newProblem.save();
 
-    field.problems.push(problem.id);
-    await field.save();
+    const updateUser = await User.findById(prob.userId);
+
+    console.log(updateUser);
+    updateUser.problemsAddedByUser.push(problem._id);
+
+    updateUser.save();
+
+    // field.problems.push(problem.id);
+    // await field.save();
 
     res.status(201).json(problem);
   } catch (err) {
