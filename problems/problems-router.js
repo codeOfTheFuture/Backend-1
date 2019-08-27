@@ -16,13 +16,6 @@ const User = mongoose.model('users');
 
 // Get all problems
 router.get('/', async (req, res) => {
-  // Problem.find()
-  //   .then(problems => res.status(200).json(problems))
-  //   .catch(err =>
-  //     res
-  //       .status(500)
-  //       .json({ message: `Their was an error with the server`, err }),
-  //   );
   try {
     let problems = await Problem.find();
 
