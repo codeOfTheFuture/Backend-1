@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 // const globalMiddleware = require('../config/global-middleware');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const authRouter = require('../auth/auth-router');
 const problemsRouter = require('../problems/problems-router');
@@ -13,6 +14,7 @@ const server = express();
 
 // Global Middleware
 // globalMiddleware(server);
+server.use(cors());
 server.use(bodyParser.json());
 
 // DB Config
