@@ -4,6 +4,6 @@ const bodyParser = require('body-parser');
 
 module.exports = server => {
   server.use(helmet());
-  server.use(cors);
-  server.use(bodyParser);
+  server.use(cors());
+  server.use(bodyParser.json());
 };
