@@ -11,14 +11,7 @@ const UsersSchema = new Schema({
     type: String,
     required: true,
   },
-  problemsAddedByUser: [
-    {
-      _id: {
-        type: Schema.Types.ObjectId,
-        ref: 'problems',
-      },
-    },
-  ],
+  problemsAddedByUser: [],
   solutionsAddedByUser: [
     {
       id: {
