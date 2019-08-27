@@ -16,7 +16,7 @@ const ProblemSchema = new Schema({
   },
   problemSolutions: [
     {
-      _id: {
+      id: {
         type: Schema.Types.ObjectId,
         ref: 'solutions',
       },

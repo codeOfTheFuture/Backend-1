@@ -8,7 +8,7 @@ const SolutionSchema = new Schema({
     required: true,
   },
   user: {
-    _id: {
+    id: {
       type: Schema.Types.ObjectId,
       ref: 'users',
     },
@@ -20,6 +20,7 @@ const SolutionSchema = new Schema({
     type: String,
     default: Date.now,
   },
+  votes: [],
   problems: [
     {
       _id: {
