@@ -15,14 +15,30 @@ const Field = mongoose.model('fields');
 const User = mongoose.model('users');
 
 // Get all problems
-router.get('/', (req, res) => {
-  Problem.find()
-    .then(problems => res.status(200).json(problems))
-    .catch(err =>
-      res
-        .status(500)
-        .json({ message: `Their was an error with the server`, err }),
-    );
+router.get('/', async (req, res) => {
+  // Problem.find()
+  //   .then(problems => res.status(200).json(problems))
+  //   .catch(err =>
+  //     res
+  //       .status(500)
+  //       .json({ message: `Their was an error with the server`, err }),
+  //   );
+  try {
+    let problems = await Problem.find();
+
+    problems = problems.map(problem => {
+      return {
+        id: problem._id,
+        title: problem.title,
+      };
+    });
+
+    res.status(200).json(problems);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: `Their was an error with the server`, err });
+  }
 });
 
 // Get a problem by id
