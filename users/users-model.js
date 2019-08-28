@@ -13,23 +13,23 @@ const UsersSchema = new Schema({
   },
   problemsAddedByUser: [],
   solutionsAddedByUser: [
-    {
-      id: {
-        type: Schema.Types.ObjectId,
-        ref: 'solutions',
-      },
-      name: {
-        type: String,
-      },
-    },
+    // {
+    //   id: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'solutions',
+    //   },
+    //   name: {
+    //     type: String,
+    //   },
+    // },
   ],
   problemsOfInterest: [
-    {
-      _id: {
-        type: Schema.Types.ObjectId,
-        ref: 'problems',
-      },
-    },
+    // {
+    //   _id: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'problems',
+    //   },
+    // },
   ],
 });
 

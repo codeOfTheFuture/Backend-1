@@ -2,14 +2,10 @@ const router = require('express').Router();
 const mongoose = require('mongoose');
 
 const Problems = require('./problems-model');
-const Fields = require('../fields/fields-model');
 const Users = require('../users/users-model');
 
 // Load Problems model
 const Problem = mongoose.model('problems');
-
-// Load Fields model
-const Field = mongoose.model('fields');
 
 // Load Users model
 const User = mongoose.model('users');
@@ -54,12 +50,15 @@ router.post('/', async (req, res) => {
   try {
     const prob = req.body;
 
-    // const field = await Field.findOne({ name: prob.field });
+    const user = await User.findById(prob.userId);
 
     const newProblem = new Problems({
       title: prob.title,
       description: prob.description,
-      user: prob.userId,
+      addedByUser: {
+        userId: prob.userId,
+        username: user.username,
+      },
     });
 
     const problem = await newProblem.save();
