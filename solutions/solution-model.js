@@ -20,21 +20,8 @@ const SolutionSchema = new Schema({
     type: String,
     default: Date.now,
   },
+  problems: [],
   votes: [],
-  problems: [
-    {
-      _id: {
-        type: Schema.Types.ObjectId,
-        ref: 'problems',
-      },
-      title: {
-        type: String,
-      },
-      description: {
-        type: String,
-      },
-    },
-  ],
 });
 
 module.exports = Solutions = mongoose.model('solutions', SolutionSchema);

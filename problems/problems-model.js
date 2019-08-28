@@ -11,20 +11,14 @@ const ProblemSchema = new Schema({
     type: String,
     required: true,
   },
-  user: {
-    type: Schema.Types.ObjectId,
-  },
-  problemSolutions: [
-    {
-      id: {
-        type: Schema.Types.ObjectId,
-        ref: 'solutions',
-      },
-      name: {
-        type: String,
-      },
+  addedByUser: {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
     },
-  ],
+    username: String,
+  },
+  problemSolutions: [],
   relatedProblems: [],
 });
 
