@@ -64,6 +64,21 @@ router.post('/login', (req, res) => {
     });
 });
 
+// Get a user info
+router.get('/user/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id).select('-password');
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: `Their was an error with the server`, error });
+  }
+});
+
 // Generate JSON Web Token
 const generateToken = user => {
   const jwtPayload = {
