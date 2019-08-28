@@ -78,4 +78,35 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Delete request to delete a solution
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { problemId } = req.body;
+
+    const solution = await Solutions.findById(id);
+    const problem = await Problems.findById(problemId);
+
+    solution.remove();
+
+    const problemSolutions = problem.problemSolutions;
+
+    problemSolutions.forEach((solution, i) => {
+      console.log(solution._id, id);
+      if (solution._id.toString() === id) {
+        problemSolutions.splice(i, 1);
+      }
+    });
+
+    problem.save();
+
+    res.status(200).json({ message: `Solution Deleted` });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: `Their was an error with the server`, error });
+  }
+});
+
 module.exports = router;
