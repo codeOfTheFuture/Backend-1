@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const Problems = require('./problems-model');
 const Users = require('../users/users-model');
 
+const restricted = require('../auth/restricted-middleware');
+
 // Load Problems model
 const Problem = mongoose.model('problems');
 
@@ -11,7 +13,7 @@ const Problem = mongoose.model('problems');
 const User = mongoose.model('users');
 
 // Get all problems
-router.get('/', async (req, res) => {
+router.get('/', restricted, async (req, res) => {
   try {
     let problems = await Problem.find();
 
