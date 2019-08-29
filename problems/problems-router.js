@@ -13,7 +13,7 @@ const Problem = mongoose.model('problems');
 const User = mongoose.model('users');
 
 // Get all problems
-router.get('/', restricted, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     let problems = await Problem.find();
 
