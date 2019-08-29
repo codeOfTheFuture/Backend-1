@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
-const restricted = require('../auth/restricted-middleware');
 
 const user = require('../users/users-model');
 const problem = require('../problems/problems-model');
