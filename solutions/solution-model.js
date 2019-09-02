@@ -17,11 +17,17 @@ const SolutionSchema = new Schema({
     },
   },
   date: {
-    type: String,
+    type: Date,
     default: Date.now,
   },
-  problems: [],
-  votes: [],
+  votes: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+      },
+    },
+  ],
 });
 
 module.exports = Solutions = mongoose.model('solutions', SolutionSchema);

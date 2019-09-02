@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 const Problems = require('./problems-model');
 const Users = require('../users/users-model');
 
-const restricted = require('../auth/restricted-middleware');
-
 // Load Problems model
 const Problem = mongoose.model('problems');
 
@@ -33,54 +31,60 @@ router.get('/', async (req, res) => {
 });
 
 // Get a problem by id
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const {
     params: { id },
   } = req;
 
-  Problem.findById(id)
-    .then(problem => res.status(200).json(problem))
-    .catch(err =>
-      res
-        .status(500)
-        .json({ message: `Their was an error with the server`, err }),
-    );
+  try {
+    const problem = await Problem.findById(id)
+      .populate('users', ['id', 'username'])
+      .populate('solutions', ['id', 'name', 'user', 'date', 'votes']);
+
+    res.status(200).json(problem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: `Server Error` });
+  }
 });
 
 // Add a problem
 router.post('/', async (req, res) => {
+  const { userId, title, description } = req.body;
+  const user = await User.findById(userId);
+
+  const newProblemFields = {};
+  newProblemFields.addedByUser = {};
+
+  (newProblemFields.addedByUser.userId = user._id),
+    (newProblemFields.addedByUser.username = user.username);
+
+  newProblemFields.title = title;
+  newProblemFields.description = description;
+
   try {
-    const prob = req.body;
+    const newProblem = new Problems(newProblemFields);
 
-    const user = await User.findById(prob.userId);
+    await newProblem.save();
 
-    const newProblem = new Problems({
-      title: prob.title,
-      description: prob.description,
-      addedByUser: {
-        userId: prob.userId,
-        username: user.username,
-      },
+    const problemsAddedByUser = {};
+
+    problemsAddedByUser._id = newProblem._id;
+    problemsAddedByUser.title = newProblem.title;
+
+    user.problemsAddedByUser.push({
+      _id: newProblem._id,
+      title: newProblem.title,
     });
 
-    const problem = await newProblem.save();
+    await user.save();
 
-    const updateUser = await User.findById(prob.userId);
-
-    console.log(updateUser);
-    updateUser.problemsAddedByUser.push({
-      id: problem._id,
-      title: problem.title,
-    });
-
-    updateUser.save();
-
-    res.status(201).json(problem);
-  } catch (err) {
-    console.log(err.message);
+    res.status(201).json(newProblem);
+  } catch (error) {
+    console.error(error);
     res
       .status(500)
-      .json({ message: `Their was an error with the server`, err });
+      .json({ message: `Their was an error with the server`, error });
   }
 });
 

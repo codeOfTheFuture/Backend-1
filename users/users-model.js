@@ -12,17 +12,7 @@ const UsersSchema = new Schema({
     required: true,
   },
   problemsAddedByUser: [],
-  solutionsAddedByUser: [
-    // {
-    //   id: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'solutions',
-    //   },
-    //   name: {
-    //     type: String,
-    //   },
-    // },
-  ],
+  solutionsAddedByUser: [],
   problemsOfInterest: [
     // {
     //   _id: {
